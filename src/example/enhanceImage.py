@@ -6,6 +6,10 @@ from src.example.deskewimage import deskew
 from deskew import determine_skew
 
 
+# Convert image to gray scale and with otsu filter to get more cleat picture
+# also with based on detect face flag face detection is triggered if its false directly
+# deskwing code is invoked and tried to deskew the input image for test purposes all
+# different images are stored for now
 def convert_image(image_path, detect_face_flag):
     print(image_path)
     print(detect_face_flag)
@@ -36,8 +40,9 @@ def convert_image(image_path, detect_face_flag):
         cv2.imwrite(original_path + '/Enhanced_'+file_name+'.tif', gray_image)
     else:
         cv2.imwrite(original_path + '/Enhanced_'+file_name+'.tif', gray_image)
-
+        # determine the skew angle to rotate the image
         angle = determine_skew(gray_image)
+        # deskew the image
         rotated = deskew(gray_image, angle, (255, 0, 0))
         cv2.imwrite(original_path + '/Enhanced_deskwed_' + file_name + '.tif', rotated)
 
@@ -82,6 +87,11 @@ def str2bool(v):
 
 if __name__ == '__main__':
     import sys
+    parser = argparse.ArgumentParser(description= 'Enhance the Image and convert to tiff.')
+    parser.add_argument('image', metavar='image_path', type=str, help='An input image path to enhance the image')
+    parser.add_argument('detect_face', metavar='detect_face', type=bool, help='Detect Face Flag true/false')
+    args = parser.parse_args()
+    print(args)
     image_path = (sys.argv[1])
     detect_face_flag = str2bool(sys.argv[2])
     convert_image(image_path, detect_face_flag)
