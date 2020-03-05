@@ -1,0 +1,11 @@
+matplotlib
+numpy
+opencv-python
+opencv-contrib-python
+deskew
+
+[dev]
+check-manifest
+
+[test]
+coverage
