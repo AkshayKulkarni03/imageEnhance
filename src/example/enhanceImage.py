@@ -2,6 +2,7 @@ import matplotlib.pyplot as plot
 import numpy as np
 import cv2
 import argparse
+import src.example.deskewimage as deskewimage
 
 
 def convertimage(imagePath, detectFaceFlag):
@@ -34,6 +35,8 @@ def convertimage(imagePath, detectFaceFlag):
         cv2.imwrite(originalPath + '/Enhanced_'+fileName+'.tif', grayImage)
     else:
         cv2.imwrite(originalPath + '/Enhanced_'+fileName+'.tif', grayImage)
+        deskewimage.deskew(grayImage, originalPath, fileName)
+
         # Otsu's thresholding
         (ret2, th2) = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
         cv2.imwrite(originalPath + '/Enhanced_otsu_'+fileName+'.tif', th2)
