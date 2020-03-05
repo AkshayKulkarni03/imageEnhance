@@ -4,9 +4,9 @@ Basic image enhancement using python(> 3.7) using [OpenCV](https://pypi.org/proj
 ## Gray scale, skew detection and correction and Face Detection
 Perform the image enhancements with basic functions like
 ~~~
- Markup : - Gray scaling - default gray scaling filters from opencv
-          - Deskewing - detect skew angle and correct image alignment
-          - Face Detection - If input flag is set then face detection and masking will be done 
+  - Gray scaling - default gray scaling filters from opencv
+  - Deskewing - detect skew angle and correct image alignment
+  - Face Detection - If input flag is set then face detection and masking will be done 
 ~~~ 
 
 ## Cli usage
