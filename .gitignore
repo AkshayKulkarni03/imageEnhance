@@ -1,6 +1,6 @@
 # general things to ignore
 build/
-dist/
+dist
 *.egg-info/
 *.egg
 *.py[cod]
