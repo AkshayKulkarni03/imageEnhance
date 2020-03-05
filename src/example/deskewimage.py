@@ -16,6 +16,7 @@ def deskew(image: np.ndarray, angle: float, background: Union[int, Tuple[int, in
     width = abs(np.sin(angle_radian) * old_height) + abs(np.cos(angle_radian) * old_width)
     height = abs(np.sin(angle_radian) * old_width) + abs(np.cos(angle_radian) * old_height)
     # reversed the first 2 items of an original image shape and then slicing array into half and getting new tuple list
+    # to load the image center
     image_center = tuple(np.array(image.shape[1::-1]) / 2)
     # Map the 2d matrix of an image with center alignment and with determined new angle
     # and update the particular elements of an array with respect to height and width
