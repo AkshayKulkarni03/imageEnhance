@@ -2,48 +2,51 @@ import matplotlib.pyplot as plot
 import numpy as np
 import cv2
 import argparse
-import src.example.deskewimage as deskewimage
+from src.example.deskewimage import deskew
+from deskew import determine_skew
 
 
-def convertimage(imagePath, detectFaceFlag):
-    print(imagePath)
-    print(detectFaceFlag)
-    idexOfLastPathSeparator = imagePath.rindex('/', 0, len(imagePath))
-    originalPath = imagePath[0:idexOfLastPathSeparator]
-    fileName = imagePath[(idexOfLastPathSeparator + 1) : len(imagePath)]
-    grayImage = cv2.imread(imagePath, cv2.IMREAD_GRAYSCALE)
+def convert_image(image_path, detect_face_flag):
+    print(image_path)
+    print(detect_face_flag)
+    index_of_last_path_separator = image_path.rindex('/', 0, len(image_path))
+    original_path = image_path[0:index_of_last_path_separator]
+    file_name = image_path[(index_of_last_path_separator + 1): len(image_path)]
+    gray_image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 
-    if detectFaceFlag:
+    if detect_face_flag:
         # Load the cascade
         face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt_tree.xml')
 
         # Detect faces
-        faces = face_cascade.detectMultiScale(grayImage, 1.1, 4)
+        faces = face_cascade.detectMultiScale(gray_image, 1.1, 4)
         if len(faces) < 1:
             count = 0
             while count < 4:
                 # rotate image by 90 degree
-                grayImage = rotateimage(grayImage, 90, count)
-                faces = face_cascade.detectMultiScale(grayImage, 1.1, 4)
+                gray_image = rotate_image(gray_image, 90)
+                faces = face_cascade.detectMultiScale(gray_image, 1.1, 4)
                 if len(faces) >= 1:
                     break
                 count += 1
 
         # Draw rectangle around the faces
         for (x, y, w, h) in faces:
-            cv2.rectangle(grayImage, (x-30, y-50), (x+20 + w, y+40 + h), (0, 0, 0), -1)
-        cv2.imwrite(originalPath + '/Enhanced_'+fileName+'.tif', grayImage)
+            cv2.rectangle(gray_image, (x-30, y-50), (x+20 + w, y+40 + h), (0, 0, 0), -1)
+        cv2.imwrite(original_path + '/Enhanced_'+file_name+'.tif', gray_image)
     else:
-        cv2.imwrite(originalPath + '/Enhanced_'+fileName+'.tif', grayImage)
-        rotated = deskewimage.deskew(grayImage, deskewimage.compute_skew(grayImage))
-        cv2.imwrite(originalPath + '/Enhanced_deskwed_' + fileName + '.tif', rotated)
+        cv2.imwrite(original_path + '/Enhanced_'+file_name+'.tif', gray_image)
+
+        angle = determine_skew(gray_image)
+        rotated = deskew(gray_image, angle, (255, 0, 0))
+        cv2.imwrite(original_path + '/Enhanced_deskwed_' + file_name + '.tif', rotated)
 
         # Otsu's thresholding
-        (ret2, th2) = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-        cv2.imwrite(originalPath + '/Enhanced_otsu_'+fileName+'.tif', th2)
+        (ret2, th2) = cv2.threshold(rotated, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        cv2.imwrite(original_path + '/Enhanced_otsu_'+file_name+'.tif', th2)
 
 
-def rotateimage(image, angel, count):
+def rotate_image(image, angel):
     (h, w) = image.shape[:2]
     (cX, cY) = (w // 2, h // 2)
     scale = 1.0
@@ -62,8 +65,8 @@ def rotateimage(image, angel, count):
     M[0, 2] += (nW / 2) - cX
     M[1, 2] += (nH / 2) - cY
 
-    rotatedimage = cv2.warpAffine(image, M, (nW, nH))
-    return rotatedimage
+    rotated_image = cv2.warpAffine(image, M, (nW, nH))
+    return rotated_image
 
 
 def str2bool(v):
@@ -79,6 +82,6 @@ def str2bool(v):
 
 if __name__ == '__main__':
     import sys
-    imagePath = (sys.argv[1])
-    detectFaceFlag = str2bool(sys.argv[2])
-    convertimage(imagePath, detectFaceFlag)
+    image_path = (sys.argv[1])
+    detect_face_flag = str2bool(sys.argv[2])
+    convert_image(image_path, detect_face_flag)
