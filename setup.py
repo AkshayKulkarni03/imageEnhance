@@ -148,7 +148,7 @@ setup(
     # If using Python 2.6 or earlier, then these have to be included in
     # MANIFEST.in as well.
     package_data={  # Optional
-        'sample': ['package_data.dat'],
+        'src.example': ['package_data.dat'],
     },
 
     # Although 'package_data' is the preferred approach, in some case you may
@@ -167,7 +167,7 @@ setup(
     # executes the function `example` from this package when invoked:
     entry_points={  # Optional
         'console_scripts': [
-            'sample=sample:example',
+            'enhanceImage=src.example:enhanceImage',
         ],
     }
 )
