@@ -18,5 +18,5 @@ enhanceImage input.png False
 
 Perform the Image Enhancement with face detection and without deskew:
 ```
-enhanceImage input.png False
+enhanceImage input.png True
 ```
