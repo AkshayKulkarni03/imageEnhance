@@ -35,7 +35,8 @@ def convertimage(imagePath, detectFaceFlag):
         cv2.imwrite(originalPath + '/Enhanced_'+fileName+'.tif', grayImage)
     else:
         cv2.imwrite(originalPath + '/Enhanced_'+fileName+'.tif', grayImage)
-        deskewimage.deskew(grayImage, originalPath, fileName)
+        rotated = deskewimage.deskew(grayImage, deskewimage.compute_skew(grayImage))
+        cv2.imwrite(originalPath + '/Enhanced_deskwed_' + fileName + '.tif', rotated)
 
         # Otsu's thresholding
         (ret2, th2) = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
