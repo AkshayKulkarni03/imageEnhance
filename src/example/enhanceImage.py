@@ -20,7 +20,7 @@ def convert_image(image_path, detect_face_flag):
 
     if detect_face_flag:
         # Load the cascade
-        face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt_tree.xml')
+        face_cascade = cv2.CascadeClassifier('src//example//haarcascade_frontalface_alt_tree.xml')
 
         # Detect faces
         faces = face_cascade.detectMultiScale(gray_image, 1.1, 4)
