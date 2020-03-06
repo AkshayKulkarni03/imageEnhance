@@ -2,7 +2,7 @@ import matplotlib.pyplot as plot
 import numpy as np
 import cv2
 import argparse
-from src.example.deskewimage import deskew
+from example.deskewimage import deskew
 from deskew import determine_skew
 
 

@@ -167,7 +167,7 @@ setup(
     # executes the function `example` from this package when invoked:
     entry_points={  # Optional
         'console_scripts': [
-            'enhanceImage=src.example:enhanceImage',
+            'enhanceImage= example:main',
         ],
     }
 )
