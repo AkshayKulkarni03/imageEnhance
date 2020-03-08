@@ -2,9 +2,9 @@ import matplotlib.pyplot as plot
 import numpy as np
 import cv2
 import argparse
-from src.example.deskewimage import deskew
-from src.example.get_skew_angle import determine_skew
-
+from example.deskewimage import deskew
+from deskew import determine_skew
+from example.get_skew_angle import determine_skew
 
 # Convert image to gray scale and with otsu filter to get more cleat picture
 # also with based on detect face flag face detection is triggered if its false directly
@@ -20,7 +20,7 @@ def convert_image(image_path, detect_face_flag):
 
     if detect_face_flag:
         # Load the cascade
-        face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt_tree.xml')
+        face_cascade = cv2.CascadeClassifier('src//example//haarcascade_frontalface_alt_tree.xml')
 
         # Detect faces
         faces = face_cascade.detectMultiScale(gray_image, 1.1, 4)
