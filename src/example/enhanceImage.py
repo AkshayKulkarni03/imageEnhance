@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 import argparse
 from src.example.deskewimage import deskew
-from deskew import determine_skew
+from src.example.get_skew_angle import determine_skew
 
 
 # Convert image to gray scale and with otsu filter to get more cleat picture
@@ -41,7 +41,8 @@ def convert_image(image_path, detect_face_flag):
     else:
         cv2.imwrite(original_path + '/Enhanced_'+file_name+'.tif', gray_image)
         # determine the skew angle to rotate the image
-        angle = determine_skew(gray_image)
+        angle, _, _, _ = determine_skew(gray_image)
+        print('Estimated angle: {}'.format(angle))
         # deskew the image
         rotated = deskew(gray_image, angle, (255, 0, 0))
         cv2.imwrite(original_path + '/Enhanced_deskwed_' + file_name + '.tif', rotated)

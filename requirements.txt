@@ -2,7 +2,7 @@ matplotlib
 numpy
 opencv-python
 opencv-contrib-python
-deskew
+scikit-image
 
 [dev]
 check-manifest
