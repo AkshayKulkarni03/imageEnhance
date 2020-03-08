@@ -1,8 +1,8 @@
 import os
 import argparse
 import sys
-from src.example.enhanceImage import convert_image, str2bool
-from src.example import enhanceImage
+from example.enhanceImage import convert_image, str2bool
+from example import enhanceImage
 
 
 def main():
